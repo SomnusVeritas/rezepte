@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rezepte/models/recipe.dart';
 
 import '../models/difficulty.dart';
 
