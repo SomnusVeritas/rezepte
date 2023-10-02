@@ -13,7 +13,8 @@ final lightTheme = _baseTheme.copyWith(
 );
 
 final darkTheme = _baseTheme.copyWith(
-    colorScheme: ColorScheme.fromSeed(
-  seedColor: Colors.purple.shade100,
-  brightness: Brightness.dark,
-));
+  colorScheme: ColorScheme.fromSeed(
+    seedColor: Colors.purple.shade100,
+    brightness: Brightness.dark,
+  ),
+);
