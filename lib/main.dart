@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rezepte/pages/dashboard_page.dart';
 
 import 'theme.dart';
 
@@ -15,10 +16,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: lightTheme,
       darkTheme: darkTheme,
-      home: Scaffold(
-          appBar: AppBar(
-        title: Text('ietn'),
-      )),
+      routes: {
+        Dashboard.routeName: (_) => const Dashboard(),
+      },
     );
   }
 }
