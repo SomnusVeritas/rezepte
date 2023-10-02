@@ -1,3 +1,4 @@
+import 'difficulty.dart';
 import 'ingredient.dart';
 import 'steps.dart';
 
@@ -14,5 +15,3 @@ class Recipe {
     this.difficulty,
   });
 }
-
-enum Difficulty { veryEasy, easy, intermediate, hard, veryHard }

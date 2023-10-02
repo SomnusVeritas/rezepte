@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:rezepte/models/recipe.dart';
 
+import '../models/difficulty.dart';
+
 class DifficultyDropdown extends StatelessWidget {
   const DifficultyDropdown({super.key});
 
   @override
   Widget build(BuildContext context) {
-    List<DropdownMenuEntry> dropdownMenuEntryList = List.generate(
-        Difficulty.values.length,
-        (index) => _toDropdownMenuEntry(
-            index, Difficulty.values.elementAt(index).name));
+    List<DropdownMenuEntry> dropdownMenuEntryList = Difficulty.difficulties
+        .map(
+          (e) => _toDropdownMenuEntry(Difficulty.difficulties.indexOf(e), e),
+        )
+        .toList();
 
     return DropdownMenu(
       dropdownMenuEntries: dropdownMenuEntryList,

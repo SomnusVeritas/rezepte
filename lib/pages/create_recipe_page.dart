@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/recipe.dart';
+import '../models/difficulty.dart';
 import '../widgets/difficulty_dropdown.dart';
 
 class CreateRecipe extends StatefulWidget {
