@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rezepte/pages/create_recipe_page.dart';
 import 'package:rezepte/pages/dashboard_page.dart';
 
 import 'theme.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       darkTheme: darkTheme,
       routes: {
         Dashboard.routeName: (_) => const Dashboard(),
+        CreateRecipe.routeName: (_) => const CreateRecipe(),
       },
     );
   }
