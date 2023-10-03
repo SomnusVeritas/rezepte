@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rezepte/widgets/dropdown_textfield.dart';
-import 'package:rezepte/widgets/ingredients_list.dart';
+import '../widgets/ingredients_widget.dart';
 
 import '../models/difficulty.dart';
 import '../widgets/difficulty_dropdown.dart';
@@ -21,6 +20,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Recipe'),
@@ -31,18 +31,19 @@ class _CreateRecipeState extends State<CreateRecipe> {
             TextFormField(
               controller: titleText,
               decoration: const InputDecoration(
-                hintText: 'Title',
+                label: Text('Title'),
               ),
             ),
             TextFormField(
               controller: descriptionText,
               decoration: const InputDecoration(
-                hintText: 'Description',
+                label: Text('Description'),
               ),
             ),
             const DifficultyDropdown(),
-            const IngredientsList(),
-            const DropdownTextfield(),
+            IngredientsWidget(
+              width: width * 0.9,
+            ),
           ],
         ),
       ),

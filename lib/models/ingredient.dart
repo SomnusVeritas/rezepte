@@ -1,6 +1,8 @@
+import 'unit.dart';
+
 class Ingredient {
   final String title;
-  List<String> possibleUnits = [];
+  List<Unit> possibleUnits = [];
   List<String> preferredBrands = [];
 
   Ingredient({
