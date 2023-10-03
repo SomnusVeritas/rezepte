@@ -40,7 +40,9 @@ class _CreateRecipeState extends State<CreateRecipe> {
                 label: Text('Description'),
               ),
             ),
-            const DifficultyDropdown(),
+            DifficultyDropdown(
+              onChanged: _onChanged,
+            ),
             IngredientsWidget(
               width: width * 0.9,
             ),
@@ -48,5 +50,9 @@ class _CreateRecipeState extends State<CreateRecipe> {
         ),
       ),
     );
+  }
+
+  void _onChanged(int index) {
+    _recipeDifficulty = Difficulty.values.elementAt(index);
   }
 }

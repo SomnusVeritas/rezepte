@@ -5,7 +5,7 @@ import 'steps.dart';
 class Recipe {
   final String title;
   final String description;
-  final Difficulty? difficulty;
+  final DifficultyUtil? difficulty;
   final List<Ingredient> ingredients = [];
   final Steps steps = Steps();
 
