@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rezepte/widgets/dropdown_textfield.dart';
+import 'package:rezepte/widgets/ingredients_list.dart';
 
 import '../models/difficulty.dart';
 import '../widgets/difficulty_dropdown.dart';
@@ -39,6 +41,8 @@ class _CreateRecipeState extends State<CreateRecipe> {
               ),
             ),
             const DifficultyDropdown(),
+            const IngredientsList(),
+            const DropdownTextfield(),
           ],
         ),
       ),
