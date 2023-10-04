@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rezepte/widgets/ingredients_bottomsheet.dart';
 import '../widgets/ingredients_widget.dart';
 
 import '../models/difficulty.dart';
@@ -43,9 +44,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
             DifficultyDropdown(
               onChanged: _onChanged,
             ),
-            IngredientsWidget(
-              width: width * 0.9,
-            ),
+            FloatingActionButton(onPressed: _openIngredientBottomSheet),
           ],
         ),
       ),
@@ -54,5 +53,12 @@ class _CreateRecipeState extends State<CreateRecipe> {
 
   void _onChanged(int index) {
     _recipeDifficulty = Difficulty.values.elementAt(index);
+  }
+
+  void _openIngredientBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => const IngredientsBottomsheet(),
+    );
   }
 }

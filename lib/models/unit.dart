@@ -9,8 +9,6 @@ class Unit {
 enum System { metric, imperial, neutral }
 
 enum UnitType {
-  metric,
-  imperial,
   fluid,
   weight,
   count,
