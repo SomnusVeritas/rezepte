@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rezepte/widgets/ingredients_bottomsheet.dart';
-import '../widgets/ingredients_widget.dart';
-
 import '../models/difficulty.dart';
-import '../widgets/difficulty_dropdown.dart';
 
 class CreateRecipe extends StatefulWidget {
   const CreateRecipe({super.key});
@@ -41,8 +38,9 @@ class _CreateRecipeState extends State<CreateRecipe> {
                 label: Text('Description'),
               ),
             ),
-            DifficultyDropdown(
-              onChanged: _onChanged,
+            DropdownMenu<Difficulty?>(
+              dropdownMenuEntries: DifficultyUtil.getDropdownList(),
+              onSelected: (value) {},
             ),
             ElevatedButton(
               onPressed: _openIngredientBottomSheet,
