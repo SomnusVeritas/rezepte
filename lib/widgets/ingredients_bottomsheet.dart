@@ -12,17 +12,14 @@ class IngredientsBottomsheet extends StatefulWidget {
 }
 
 class _IngredientsBottomsheetState extends State<IngredientsBottomsheet> {
-  TextEditingController dropdownController = TextEditingController();
-  final List<DropdownMenuEntry<Unit>> unitEntries = [];
   final List<DropdownMenuEntry<Ingredient>> ingredientEntries = [];
+  final List<DropdownMenuEntry<Unit>> unitEntries = [];
   Unit? selectedUnit;
-  @override
-  Widget build(BuildContext context) {
-    return BottomSheet(
-      onClosing: onClosing,
-      builder: _bottomSheetContent,
-    );
-  }
+
+  bool _isOptional = false;
+  TextEditingController _ingredientController = TextEditingController();
+  TextEditingController _amountController = TextEditingController();
+  TextEditingController _unitController = TextEditingController();
 
   @override
   void initState() {
@@ -39,56 +36,122 @@ class _IngredientsBottomsheetState extends State<IngredientsBottomsheet> {
   void onClosing() {}
 
   Widget _bottomSheetContent(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        top: 20,
-        left: 10,
-        right: 10,
-        bottom: MediaQuery.of(context).viewInsets.bottom,
-      ),
-      child: Column(
-        children: [
-          Row(
+    return Wrap(
+      children: [
+        Padding(
+          padding: EdgeInsets.only(
+            top: 20,
+            left: 20,
+            right: 20,
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
             children: [
-              Expanded(
-                flex: 4,
-                child: DropdownMenu<Ingredient>(
-                  dropdownMenuEntries: ingredientEntries,
-                  enableSearch: true,
-                  enableFilter: true,
-                  requestFocusOnTap: true,
-                ),
+              DropdownMenu<Ingredient?>(
+                dropdownMenuEntries: ingredientEntries,
+                enableSearch: true,
+                enableFilter: true,
+                requestFocusOnTap: true,
+                controller: _ingredientController,
+                label: const Text('Ingredient'),
+                textStyle:
+                    TextStyle(color: Theme.of(context).colorScheme.onSurface),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      maxLines: 1,
+                      controller: _amountController,
+                      onTapOutside: (_) =>
+                          FocusManager.instance.primaryFocus?.unfocus(),
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.next,
+                      decoration: const InputDecoration(
+                        label: Text('Amount'),
+                      ),
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurface),
+                    ),
+                  ),
+                  DropdownMenu<Unit?>(
+                    label: const Text('Unit'),
+                    width: 150,
+                    requestFocusOnTap: true,
+                    controller: _unitController,
+                    dropdownMenuEntries: unitEntries,
+                    onSelected: (unit) => setState(() {
+                      selectedUnit = unit;
+                    }),
+                    textStyle: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurface),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    'optional',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurface),
+                  ),
+                  Checkbox(
+                    value: _isOptional,
+                    onChanged: (_) =>
+                        setState(() => _isOptional = !_isOptional),
+                  ),
+                ],
               ),
             ],
           ),
-          Row(
+        ),
+        const SizedBox(
+          height: 200,
+          width: 400,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Expanded(
-                child: TextField(
-                  maxLines: 1,
-                  onTapOutside: (_) =>
-                      FocusManager.instance.primaryFocus?.unfocus(),
-                  keyboardType: TextInputType.number,
-                  textInputAction: TextInputAction.next,
-                  decoration: InputDecoration(
-                    label: Text('Amount'),
-                  ),
-                ),
+              TextButton(
+                onPressed: _cancelTapped,
+                child: const Text('Cancel'),
               ),
-              DropdownMenu<Unit>(
-                label: const Text('Unit'),
-                width: 150,
-                requestFocusOnTap: true,
-                controller: dropdownController,
-                dropdownMenuEntries: unitEntries,
-                onSelected: (unit) => setState(() {
-                  selectedUnit = unit;
-                }),
-              )
+              TextButton(
+                onPressed: _finishTapped,
+                child: const Text('Finish'),
+              ),
+              TextButton(
+                onPressed: _nextTapped,
+                child: const Text('Next'),
+              ),
             ],
-          )
-        ],
-      ),
+          ),
+        ),
+      ],
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomSheet(
+      onClosing: onClosing,
+      builder: _bottomSheetContent,
+    );
+  }
+
+  void _nextTapped() {
+    setState(() {
+      _ingredientController.value = TextEditingValue.empty;
+      _unitController.value = TextEditingValue.empty;
+      _amountController.value = TextEditingValue.empty;
+      _isOptional = false;
+    });
+  }
+
+  void _finishTapped() {}
+
+  void _cancelTapped() {}
 }

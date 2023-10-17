@@ -44,7 +44,10 @@ class _CreateRecipeState extends State<CreateRecipe> {
             DifficultyDropdown(
               onChanged: _onChanged,
             ),
-            FloatingActionButton(onPressed: _openIngredientBottomSheet),
+            ElevatedButton(
+              onPressed: _openIngredientBottomSheet,
+              child: const Text('Add Ingredient'),
+            ),
           ],
         ),
       ),

@@ -10,21 +10,20 @@ class DifficultyDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<DropdownMenuEntry> dropdownMenuEntryList = DifficultyUtil.difficulties
-        .map((e) =>
-            _toDropdownMenuEntry(DifficultyUtil.difficulties.indexOf(e), e))
-        .toList();
+    List<DropdownMenuEntry<Difficulty>> dropdownMenuEntryList =
+        Difficulty.values.map((e) => _toDropdownMenuEntry(e, e.name)).toList();
 
-    return DropdownMenu(
+    return DropdownMenu<Difficulty?>(
       dropdownMenuEntries: dropdownMenuEntryList,
       onSelected: (value) {
         if (onChanged != null) {
-          onChanged!(value as int);
+          onChanged!(value?.index ?? -1);
         }
       },
     );
   }
 
-  DropdownMenuEntry _toDropdownMenuEntry(int index, String text) =>
-      DropdownMenuEntry(value: index, label: text);
+  DropdownMenuEntry<Difficulty> _toDropdownMenuEntry(
+          Difficulty difficulty, String text) =>
+      DropdownMenuEntry(value: difficulty, label: text);
 }
