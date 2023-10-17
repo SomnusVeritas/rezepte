@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../constants.dart' as constants;
 import '../models/ingredient.dart';
 import '../models/unit.dart';
 import '../example_data.dart' as ea;
+import '../services/providers/recipe_provider.dart';
 
 class IngredientsBottomsheet extends StatefulWidget {
   const IngredientsBottomsheet({super.key});
@@ -15,6 +17,7 @@ class _IngredientsBottomsheetState extends State<IngredientsBottomsheet> {
   final List<DropdownMenuEntry<Ingredient>> ingredientEntries = [];
   final List<DropdownMenuEntry<Unit>> unitEntries = [];
   Unit? selectedUnit;
+  late RecipeProvider recipeProvider;
 
   bool _isOptional = false;
   TextEditingController _ingredientController = TextEditingController();
@@ -136,6 +139,7 @@ class _IngredientsBottomsheetState extends State<IngredientsBottomsheet> {
 
   @override
   Widget build(BuildContext context) {
+    recipeProvider = Provider.of<RecipeProvider>(context);
     return BottomSheet(
       onClosing: onClosing,
       builder: _bottomSheetContent,
@@ -143,6 +147,7 @@ class _IngredientsBottomsheetState extends State<IngredientsBottomsheet> {
   }
 
   void _nextTapped() {
+    _submit();
     setState(() {
       _ingredientController.value = TextEditingValue.empty;
       _unitController.value = TextEditingValue.empty;
@@ -151,7 +156,13 @@ class _IngredientsBottomsheetState extends State<IngredientsBottomsheet> {
     });
   }
 
-  void _finishTapped() {}
-
-  void _cancelTapped() {}
+  void _finishTapped() {
+    // TODO implement}
+  }
+  void _cancelTapped() {
+    // TODO implement}
+  }
+  void _submit() {
+    // TODO implement
+  }
 }

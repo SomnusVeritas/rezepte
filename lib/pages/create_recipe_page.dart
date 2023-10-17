@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rezepte/widgets/ingredients_bottomsheet.dart';
 import '../models/difficulty.dart';
+import '../services/providers/recipe_provider.dart';
 
 class CreateRecipe extends StatefulWidget {
   const CreateRecipe({super.key});
@@ -11,14 +13,11 @@ class CreateRecipe extends StatefulWidget {
 }
 
 class _CreateRecipeState extends State<CreateRecipe> {
-  Difficulty? _recipeDifficulty;
-
-  TextEditingController titleText = TextEditingController();
-  TextEditingController descriptionText = TextEditingController();
+  late RecipeProvider recipeProvider;
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
+    recipeProvider = Provider.of<RecipeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Recipe'),
@@ -27,20 +26,20 @@ class _CreateRecipeState extends State<CreateRecipe> {
         child: Column(
           children: [
             TextFormField(
-              controller: titleText,
+              onChanged: (value) => recipeProvider.title = value,
               decoration: const InputDecoration(
                 label: Text('Title'),
               ),
             ),
             TextFormField(
-              controller: descriptionText,
+              onChanged: (value) => recipeProvider.description = value,
               decoration: const InputDecoration(
                 label: Text('Description'),
               ),
             ),
             DropdownMenu<Difficulty?>(
               dropdownMenuEntries: DifficultyUtil.getDropdownList(),
-              onSelected: (value) {},
+              onSelected: (value) => recipeProvider.difficulty = value,
             ),
             ElevatedButton(
               onPressed: _openIngredientBottomSheet,
@@ -50,10 +49,6 @@ class _CreateRecipeState extends State<CreateRecipe> {
         ),
       ),
     );
-  }
-
-  void _onChanged(int index) {
-    _recipeDifficulty = Difficulty.values.elementAt(index);
   }
 
   void _openIngredientBottomSheet() {
