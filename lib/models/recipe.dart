@@ -1,13 +1,13 @@
 import 'difficulty.dart';
 import 'ingredient.dart';
-import 'steps.dart';
+import 'cooking_step.dart';
 
 class Recipe {
   final String title;
   final String description;
   final Difficulty? difficulty;
   final List<Ingredient> ingredients = [];
-  final Steps steps = Steps();
+  final List<CookingStep> steps = [];
 
   Recipe({
     required this.title,

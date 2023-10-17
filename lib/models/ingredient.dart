@@ -10,4 +10,10 @@ class Ingredient {
     required this.possibleUnits,
     this.preferredBrands = const [],
   });
+
+  @override
+  bool operator ==(other) {
+    Ingredient i = other as Ingredient;
+    return title == i.title;
+  }
 }
