@@ -7,7 +7,7 @@ class Ingredient {
 
   Ingredient({
     required this.title,
-    required this.possibleUnits,
+    this.possibleUnits = const [],
     this.preferredBrands = const [],
   });
 

@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart' as constants;
 import '../models/ingredient.dart';
+import '../models/ingredient_list_entry.dart';
 import '../models/unit.dart';
 import '../example_data.dart' as ea;
 import '../services/providers/recipe_provider.dart';
 
+typedef IngredientCallback = void Function(IngredientListEntry);
+
 class IngredientsBottomsheet extends StatefulWidget {
-  const IngredientsBottomsheet({super.key});
+  const IngredientsBottomsheet({required this.onSubmitted, super.key});
+
+  final IngredientCallback onSubmitted;
 
   @override
   State<IngredientsBottomsheet> createState() => _IngredientsBottomsheetState();
@@ -15,13 +20,13 @@ class IngredientsBottomsheet extends StatefulWidget {
 
 class _IngredientsBottomsheetState extends State<IngredientsBottomsheet> {
   final List<DropdownMenuEntry<Ingredient>> ingredientEntries = [];
-  final List<DropdownMenuEntry<Unit>> unitEntries = [];
-  Unit? selectedUnit;
   late RecipeProvider recipeProvider;
+  Unit? selectedUnit;
+  final List<DropdownMenuEntry<Unit>> unitEntries = [];
 
-  bool _isOptional = false;
-  TextEditingController _ingredientController = TextEditingController();
   TextEditingController _amountController = TextEditingController();
+  TextEditingController _ingredientController = TextEditingController();
+  bool _isOptional = false;
   TextEditingController _unitController = TextEditingController();
 
   @override
@@ -137,6 +142,44 @@ class _IngredientsBottomsheetState extends State<IngredientsBottomsheet> {
     );
   }
 
+  void _nextTapped() {
+    final success = _submit();
+    if (success) {
+      setState(() {
+        _ingredientController.value = TextEditingValue.empty;
+        _unitController.value = TextEditingValue.empty;
+        _amountController.value = TextEditingValue.empty;
+        _isOptional = false;
+        selectedUnit = null;
+      });
+    }
+  }
+
+  void _finishTapped() {
+    final success = _submit();
+    if (success) {
+      Navigator.of(context).pop();
+    }
+  }
+
+  void _cancelTapped() {
+    Navigator.of(context).pop();
+  }
+
+  bool _submit() {
+    final ingredient = Ingredient(title: _ingredientController.text);
+    final unit = selectedUnit;
+    final amount = int.tryParse(_amountController.text);
+    if (ingredient.title.isEmpty || unit == null || amount == null) {
+      return false;
+    }
+
+    final newEntry = IngredientListEntry(ingredient, amount, unit, _isOptional);
+    widget.onSubmitted(newEntry);
+
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     recipeProvider = Provider.of<RecipeProvider>(context);
@@ -144,25 +187,5 @@ class _IngredientsBottomsheetState extends State<IngredientsBottomsheet> {
       onClosing: onClosing,
       builder: _bottomSheetContent,
     );
-  }
-
-  void _nextTapped() {
-    _submit();
-    setState(() {
-      _ingredientController.value = TextEditingValue.empty;
-      _unitController.value = TextEditingValue.empty;
-      _amountController.value = TextEditingValue.empty;
-      _isOptional = false;
-    });
-  }
-
-  void _finishTapped() {
-    // TODO implement}
-  }
-  void _cancelTapped() {
-    // TODO implement}
-  }
-  void _submit() {
-    // TODO implement
   }
 }
