@@ -33,6 +33,12 @@ class _CreateRecipeState extends State<CreateRecipe> {
         appBar: AppBar(
           title: const Text('Create Recipe'),
         ),
+        floatingActionButton: recipe.isNotEmpty
+            ? FloatingActionButton(
+                onPressed: _onRecipeSubmitted,
+                child: const Icon(Icons.save),
+              )
+            : null,
         body: Form(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -151,5 +157,9 @@ class _CreateRecipeState extends State<CreateRecipe> {
         ],
       ),
     );
+  }
+
+  void _onRecipeSubmitted() {
+    // TODO implement onRecipeSubmitted
   }
 }
