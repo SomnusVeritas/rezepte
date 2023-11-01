@@ -86,9 +86,11 @@ class _IngredientsBottomsheetState extends State<IngredientsBottomsheet> {
                   DropdownMenu<Unit?>(
                     label: const Text('Unit'),
                     width: 150,
-                    requestFocusOnTap: true,
+                    requestFocusOnTap: false,
                     controller: _unitController,
                     dropdownMenuEntries: unitEntries,
+                    enableSearch: false,
+                    enableFilter: false,
                     onSelected: (unit) => setState(() {
                       selectedUnit = unit;
                     }),
