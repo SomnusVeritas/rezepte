@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rezepte/widgets/ingredients_bottomsheet.dart';
+import 'package:rezepte/widgets/will_pop_scope.dart';
 import '../models/difficulty.dart';
 import '../models/ingredient_list_entry.dart';
 import '../services/providers/recipe_provider.dart';
@@ -25,8 +26,9 @@ class _CreateRecipeState extends State<CreateRecipe> {
   @override
   Widget build(BuildContext context) {
     recipe = Provider.of<RecipeProvider>(context);
-    return WillPopScope(
-      onWillPop: _onWillPop,
+    return CustomWillPopScope(
+      context,
+      ignore: recipe.isEmpty,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Create Recipe'),
@@ -110,30 +112,5 @@ class _CreateRecipeState extends State<CreateRecipe> {
         ],
       ),
     );
-  }
-
-  Future<bool> _onWillPop() {
-    if (recipe.isEmpty) {
-      return Future<bool>(
-        () {
-          return true;
-        },
-      );
-    }
-    return showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Leave the page?'),
-        content: const Text('Progress will be lost.'),
-        actions: [
-          TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('cancel')),
-          TextButton(
-              onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('leave')),
-        ],
-      ),
-    ).then((value) => value ?? false);
   }
 }
