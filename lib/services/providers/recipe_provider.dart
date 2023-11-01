@@ -12,13 +12,27 @@ class RecipeProvider extends ChangeNotifier implements Recipe {
   final List<IngredientListEntry> _ingredients = [];
   final List<CookingStep> _steps = [];
 
-  void clearRecipe() {
+  void clearRecipe({silent = false}) {
     _title = '';
     _description = '';
     _difficulty = null;
     _ingredients.clear();
     _steps.clear();
-    notifyListeners();
+    if (!silent) {
+      notifyListeners();
+    }
+  }
+
+  bool get isEmpty {
+    return _title.isEmpty &&
+        _description.isEmpty &&
+        _difficulty == null &&
+        _ingredients.isEmpty &&
+        steps.isEmpty;
+  }
+
+  bool get isNotEmpty {
+    return !isEmpty;
   }
 
   @override
