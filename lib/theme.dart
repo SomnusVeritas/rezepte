@@ -4,7 +4,7 @@ final _baseTheme = ThemeData(
   fontFamily: "Ubuntu",
   useMaterial3: true,
 ).copyWith(
-  dividerTheme: const DividerThemeData(indent: 20, endIndent: 20),
+  dividerTheme: const DividerThemeData(indent: 0, endIndent: 0),
 );
 
 final lightTheme = _baseTheme.copyWith(
@@ -17,8 +17,11 @@ final lightTheme = _baseTheme.copyWith(
     ));
 
 final darkTheme = _baseTheme.copyWith(
-  colorScheme: ColorScheme.fromSeed(
-    seedColor: Colors.purple.shade100,
-    brightness: Brightness.dark,
-  ),
+  colorScheme: _darkColorScheme,
+  scaffoldBackgroundColor: _darkColorScheme.background,
+);
+
+final _darkColorScheme = ColorScheme.fromSeed(
+  seedColor: Colors.purple.shade100,
+  brightness: Brightness.dark,
 );

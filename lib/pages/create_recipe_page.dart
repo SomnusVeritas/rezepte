@@ -43,17 +43,23 @@ class _CreateRecipeState extends State<CreateRecipe> {
                   decoration: const InputDecoration(
                     label: Text('Title'),
                   ),
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.onBackground),
                 ),
                 TextFormField(
                   onChanged: (value) => recipe.description = value,
                   decoration: const InputDecoration(
                     label: Text('Description'),
                   ),
+                  style: TextStyle(
+                      color: Theme.of(context).colorScheme.onBackground),
                 ),
                 DropdownMenu<Difficulty?>(
                   dropdownMenuEntries: DifficultyUtil.getDropdownList(),
                   onSelected: (value) => recipe.difficulty = value,
                   label: const Text('Difficulty'),
+                  textStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.onBackground),
                 ),
                 ElevatedButton(
                   onPressed: _openIngredientBottomSheet,
@@ -87,27 +93,42 @@ class _CreateRecipeState extends State<CreateRecipe> {
         recipe.ingredients.add(ingredient);
       });
 
+  void _onIngredientRemoveTapped(int index) {}
+
   Widget? _ingredientListBuilder(BuildContext context, int index) {
     final ingredient = recipe.ingredients.elementAt(index);
-    final textTheme = Theme.of(context).textTheme.titleMedium;
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      title: Text(ingredient.ingredient.title),
+      subtitle: ingredient.optional ? const Text('optional') : null,
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Text(ingredient.ingredient.title, style: textTheme),
-          Row(
-            children: [
-              Text(
-                ingredient.amount.toString(),
-                style: textTheme,
-              ),
-              const Padding(padding: EdgeInsets.symmetric(horizontal: 2)),
-              Text(
-                ingredient.unit.name,
-                style: textTheme,
-              ),
-            ],
+          Text(
+            ingredient.amount.toString(),
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(color: Theme.of(context).colorScheme.onBackground),
+          ),
+          const Padding(padding: EdgeInsets.symmetric(horizontal: 2)),
+          Text(
+            ingredient.unit.name,
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(color: Theme.of(context).colorScheme.onBackground),
+          ),
+          const Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
+          SizedBox(
+            width: 30,
+            height: 30,
+            child: IconButton(
+              padding: EdgeInsets.zero,
+              onPressed: () => _onIngredientRemoveTapped(index),
+              icon: const Icon(Icons.delete),
+            ),
           ),
         ],
       ),
