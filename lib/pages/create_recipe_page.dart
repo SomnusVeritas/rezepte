@@ -47,6 +47,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                       color: Theme.of(context).colorScheme.onBackground),
                 ),
                 TextFormField(
+                  maxLines: 4,
                   onChanged: (value) => recipe.description = value,
                   decoration: const InputDecoration(
                     label: Text('Description'),
@@ -93,7 +94,21 @@ class _CreateRecipeState extends State<CreateRecipe> {
         recipe.ingredients.add(ingredient);
       });
 
-  void _onIngredientRemoveTapped(int index) {}
+  void _onIngredientRemoveTapped(int index) {
+    final removedIngredient = recipe.ingredients.elementAt(index);
+
+    recipe.removeIngredientAt(index);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('Ingredient Removed'),
+        action: SnackBarAction(
+            label: 'Undo',
+            onPressed: () {
+              recipe.addIngredient(removedIngredient);
+            }),
+      ),
+    );
+  }
 
   Widget? _ingredientListBuilder(BuildContext context, int index) {
     final ingredient = recipe.ingredients.elementAt(index);
