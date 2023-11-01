@@ -39,6 +39,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
             child: Column(
               children: [
                 TextFormField(
+                  onTapOutside: (event) => FocusScope.of(context).unfocus(),
                   onChanged: (value) => recipe.title = value,
                   decoration: const InputDecoration(
                     label: Text('Title'),
@@ -47,6 +48,8 @@ class _CreateRecipeState extends State<CreateRecipe> {
                       color: Theme.of(context).colorScheme.onBackground),
                 ),
                 TextFormField(
+                  onTapOutside: (event) => FocusScope.of(context).unfocus(),
+                  minLines: 1,
                   maxLines: 4,
                   onChanged: (value) => recipe.description = value,
                   decoration: const InputDecoration(
