@@ -8,4 +8,10 @@ class IngredientListEntry {
   final bool optional;
 
   IngredientListEntry(this.ingredient, this.amount, this.unit, this.optional);
+
+  @override
+  operator ==(Object other) {
+    final i = other as IngredientListEntry;
+    return ingredient == i.ingredient;
+  }
 }

@@ -14,12 +14,11 @@ class CreateRecipe extends StatefulWidget {
 }
 
 class _CreateRecipeState extends State<CreateRecipe> {
-  late RecipeProvider recipeProvider;
-  final List<IngredientListEntry> ingredientEntries = [];
+  late RecipeProvider recipe;
 
   @override
   Widget build(BuildContext context) {
-    recipeProvider = Provider.of<RecipeProvider>(context);
+    recipe = Provider.of<RecipeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Recipe'),
@@ -30,20 +29,20 @@ class _CreateRecipeState extends State<CreateRecipe> {
           child: Column(
             children: [
               TextFormField(
-                onChanged: (value) => recipeProvider.title = value,
+                onChanged: (value) => recipe.title = value,
                 decoration: const InputDecoration(
                   label: Text('Title'),
                 ),
               ),
               TextFormField(
-                onChanged: (value) => recipeProvider.description = value,
+                onChanged: (value) => recipe.description = value,
                 decoration: const InputDecoration(
                   label: Text('Description'),
                 ),
               ),
               DropdownMenu<Difficulty?>(
                 dropdownMenuEntries: DifficultyUtil.getDropdownList(),
-                onSelected: (value) => recipeProvider.difficulty = value,
+                onSelected: (value) => recipe.difficulty = value,
                 label: const Text('Difficulty'),
               ),
               ElevatedButton(
@@ -52,7 +51,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
               ),
               Expanded(
                 child: ListView.separated(
-                  itemCount: ingredientEntries.length,
+                  itemCount: recipe.ingredients.length,
                   itemBuilder: _ingredientListBuilder,
                   separatorBuilder: (context, index) => const Divider(),
                 ),
@@ -74,11 +73,11 @@ class _CreateRecipeState extends State<CreateRecipe> {
   }
 
   void _onIngredientSubmitted(IngredientListEntry ingredient) => setState(() {
-        ingredientEntries.add(ingredient);
+        recipe.ingredients.add(ingredient);
       });
 
   Widget? _ingredientListBuilder(BuildContext context, int index) {
-    final ingredient = ingredientEntries.elementAt(index);
+    final ingredient = recipe.ingredients.elementAt(index);
     final textTheme = Theme.of(context).textTheme.titleMedium;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -102,9 +101,5 @@ class _CreateRecipeState extends State<CreateRecipe> {
         ],
       ),
     );
-  }
-
-  Widget _seperatorBuilder(BuildContext context, int index) {
-    return const Divider(indent: 20, endIndent: 20);
   }
 }

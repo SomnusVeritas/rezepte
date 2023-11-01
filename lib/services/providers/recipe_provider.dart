@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rezepte/models/difficulty.dart';
-import 'package:rezepte/models/ingredient.dart';
-import 'package:rezepte/models/cooking_step.dart';
+import '../../models/difficulty.dart';
+import '../../models/cooking_step.dart';
+import '../../models/ingredient_list_entry.dart';
 
 import '../../models/recipe.dart';
 
@@ -9,7 +9,7 @@ class RecipeProvider extends ChangeNotifier implements Recipe {
   String _title = '';
   String _description = '';
   Difficulty? _difficulty;
-  final List<Ingredient> _ingredients = [];
+  final List<IngredientListEntry> _ingredients = [];
   final List<CookingStep> _steps = [];
 
   void clearRecipe() {
@@ -46,9 +46,9 @@ class RecipeProvider extends ChangeNotifier implements Recipe {
   }
 
   @override
-  List<Ingredient> get ingredients => _ingredients;
+  List<IngredientListEntry> get ingredients => _ingredients;
 
-  void addIngredient(Ingredient ingredient) {
+  void addIngredient(IngredientListEntry ingredient) {
     _ingredients.add(ingredient);
     notifyListeners();
   }
@@ -63,7 +63,7 @@ class RecipeProvider extends ChangeNotifier implements Recipe {
     if (!silent) notifyListeners();
   }
 
-  void removeIngredient(Ingredient ingredient, {silent = false}) {
+  void removeIngredient(IngredientListEntry ingredient, {silent = false}) {
     ingredients.removeWhere((element) => element == ingredient);
     if (!silent) notifyListeners();
   }
