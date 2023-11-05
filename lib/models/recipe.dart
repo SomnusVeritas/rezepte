@@ -3,18 +3,16 @@ import 'cooking_step.dart';
 import 'ingredient_list_entry.dart';
 
 class Recipe {
-  final String title;
-  final String description;
-  final Difficulty? difficulty;
-  final List<IngredientListEntry> ingredients;
-  final List<CookingStep> steps;
+  String title;
+  String description;
+  Difficulty? difficulty;
+  final List<IngredientListEntry> ingredients = [];
+  final List<CookingStep> steps = [];
 
   Recipe({
     required this.title,
     this.description = '',
     this.difficulty,
-    this.ingredients = const [],
-    this.steps = const [],
   });
 
   void addIngredient(IngredientListEntry ingredient) =>
@@ -33,4 +31,24 @@ class Recipe {
   void addStep(CookingStep step) => steps.add(step);
 
   void removeStepAt(int index) => steps.removeAt(index);
+
+  bool get isEmpty {
+    return title.isEmpty &&
+        description.isEmpty &&
+        difficulty == null &&
+        ingredients.isEmpty &&
+        steps.isEmpty;
+  }
+
+  bool get isNotEmpty {
+    return !isEmpty;
+  }
+
+  void clear() {
+    title = '';
+    description = '';
+    difficulty = null;
+    ingredients.clear();
+    steps.clear();
+  }
 }

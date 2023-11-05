@@ -5,6 +5,7 @@ import 'package:rezepte/pages/dashboard_page.dart';
 import 'package:rezepte/services/providers/recipe_list_provider.dart';
 import 'package:rezepte/services/providers/recipe_provider.dart';
 
+import 'pages/recipe_detail_page.dart';
 import 'theme.dart';
 
 void main() {
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
       routes: {
         Dashboard.routeName: (_) => const Dashboard(),
         CreateRecipe.routeName: (_) => const CreateRecipe(),
+        RecipeDetail.routeName: (_) => const RecipeDetail(),
       },
     );
   }
