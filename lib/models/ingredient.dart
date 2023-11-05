@@ -16,4 +16,9 @@ class Ingredient {
     Ingredient i = other as Ingredient;
     return title == i.title;
   }
+
+  @override
+  int get hashCode {
+    return Object.hash(title, null);
+  }
 }

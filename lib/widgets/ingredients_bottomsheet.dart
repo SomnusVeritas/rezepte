@@ -24,10 +24,10 @@ class _IngredientsBottomsheetState extends State<IngredientsBottomsheet> {
   Unit? selectedUnit;
   final List<DropdownMenuEntry<Unit>> unitEntries = [];
 
-  TextEditingController _amountController = TextEditingController();
-  TextEditingController _ingredientController = TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
+  final TextEditingController _ingredientController = TextEditingController();
   bool _isOptional = false;
-  TextEditingController _unitController = TextEditingController();
+  final TextEditingController _unitController = TextEditingController();
 
   @override
   void initState() {

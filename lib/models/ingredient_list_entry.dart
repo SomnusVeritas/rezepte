@@ -14,4 +14,9 @@ class IngredientListEntry {
     final i = other as IngredientListEntry;
     return ingredient == i.ingredient;
   }
+
+  @override
+  int get hashCode {
+    return Object.hash(ingredient, null);
+  }
 }
