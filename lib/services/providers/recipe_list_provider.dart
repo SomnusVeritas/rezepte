@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../models/recipe.dart';
+import 'package:rezepte/example_data.dart' as e;
 
 class RecipeListProvider extends ChangeNotifier {
-  final List<Recipe> _recipes = [];
+  final List<Recipe> _recipes = kDebugMode ? e.exampleRecipes : [];
 
   set recipes(List<Recipe> recipes) {
     _recipes.clear();

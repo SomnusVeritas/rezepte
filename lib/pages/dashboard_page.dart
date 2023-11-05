@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rezepte/pages/create_recipe_page.dart';
+import 'package:rezepte/widgets/recipe_list.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
@@ -19,6 +20,7 @@ class Dashboard extends StatelessWidget {
         onPressed: () => _onAddTapped(context),
         child: const Icon(Icons.add),
       ),
+      body: const RecipeList(),
     );
   }
 }

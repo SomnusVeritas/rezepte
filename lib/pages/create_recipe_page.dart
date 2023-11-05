@@ -4,6 +4,7 @@ import 'package:rezepte/widgets/ingredients_bottomsheet.dart';
 import 'package:rezepte/widgets/will_pop_scope.dart';
 import '../models/difficulty.dart';
 import '../models/ingredient_list_entry.dart';
+import '../services/providers/recipe_list_provider.dart';
 import '../services/providers/recipe_provider.dart';
 
 class CreateRecipe extends StatefulWidget {
@@ -15,25 +16,28 @@ class CreateRecipe extends StatefulWidget {
 }
 
 class _CreateRecipeState extends State<CreateRecipe> {
-  late RecipeProvider recipe;
+  late RecipeProvider recipeProvider;
+  late RecipeListProvider recipeListProvider;
 
   @override
   void dispose() {
     super.dispose();
-    recipe.clearRecipe(silent: true);
+    recipeProvider.clearRecipe(silent: true);
   }
 
   @override
   Widget build(BuildContext context) {
-    recipe = Provider.of<RecipeProvider>(context);
+    recipeProvider = Provider.of<RecipeProvider>(context);
+    recipeListProvider =
+        Provider.of<RecipeListProvider>(context, listen: false);
     return CustomWillPopScope(
       context,
-      ignore: recipe.isEmpty,
+      ignore: recipeProvider.isEmpty,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Create Recipe'),
         ),
-        floatingActionButton: recipe.isNotEmpty
+        floatingActionButton: recipeProvider.isNotEmpty
             ? FloatingActionButton(
                 onPressed: _onRecipeSubmitted,
                 child: const Icon(Icons.save),
@@ -46,7 +50,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
               children: [
                 TextFormField(
                   onTapOutside: (event) => FocusScope.of(context).unfocus(),
-                  onChanged: (value) => recipe.title = value,
+                  onChanged: (value) => recipeProvider.title = value,
                   decoration: const InputDecoration(
                     label: Text('Title'),
                   ),
@@ -57,7 +61,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                   onTapOutside: (event) => FocusScope.of(context).unfocus(),
                   minLines: 1,
                   maxLines: 4,
-                  onChanged: (value) => recipe.description = value,
+                  onChanged: (value) => recipeProvider.description = value,
                   decoration: const InputDecoration(
                     label: Text('Description'),
                   ),
@@ -66,7 +70,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                 ),
                 DropdownMenu<Difficulty?>(
                   dropdownMenuEntries: DifficultyUtil.getDropdownList(),
-                  onSelected: (value) => recipe.difficulty = value,
+                  onSelected: (value) => recipeProvider.difficulty = value,
                   label: const Text('Difficulty'),
                   textStyle: TextStyle(
                       color: Theme.of(context).colorScheme.onBackground),
@@ -77,7 +81,7 @@ class _CreateRecipeState extends State<CreateRecipe> {
                 ),
                 Expanded(
                   child: ListView.separated(
-                    itemCount: recipe.ingredients.length,
+                    itemCount: recipeProvider.ingredients.length,
                     itemBuilder: _ingredientListBuilder,
                     separatorBuilder: (context, index) => const Divider(),
                   ),
@@ -100,27 +104,27 @@ class _CreateRecipeState extends State<CreateRecipe> {
   }
 
   void _onIngredientSubmitted(IngredientListEntry ingredient) => setState(() {
-        recipe.ingredients.add(ingredient);
+        recipeProvider.ingredients.add(ingredient);
       });
 
   void _onIngredientRemoveTapped(int index) {
-    final removedIngredient = recipe.ingredients.elementAt(index);
+    final removedIngredient = recipeProvider.ingredients.elementAt(index);
 
-    recipe.removeIngredientAt(index);
+    recipeProvider.removeIngredientAt(index);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: const Text('Ingredient Removed'),
         action: SnackBarAction(
             label: 'Undo',
             onPressed: () {
-              recipe.addIngredient(removedIngredient);
+              recipeProvider.addIngredient(removedIngredient);
             }),
       ),
     );
   }
 
   Widget? _ingredientListBuilder(BuildContext context, int index) {
-    final ingredient = recipe.ingredients.elementAt(index);
+    final ingredient = recipeProvider.ingredients.elementAt(index);
 
     return ListTile(
       contentPadding: EdgeInsets.zero,
@@ -161,5 +165,8 @@ class _CreateRecipeState extends State<CreateRecipe> {
 
   void _onRecipeSubmitted() {
     // TODO implement onRecipeSubmitted
+    if (recipeProvider.isEmpty) return;
+    recipeListProvider.addRecipe(recipeProvider.recipe);
+    Navigator.of(context).pop();
   }
 }
