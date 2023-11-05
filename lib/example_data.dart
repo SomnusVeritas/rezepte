@@ -1,7 +1,9 @@
+import 'package:rezepte/models/difficulty.dart';
 import 'package:rezepte/models/unit.dart';
 
 import 'models/ingredient.dart';
 import 'constants.dart' as constants;
+import 'models/recipe.dart';
 
 final List<Unit> _weightAndCount = constants.units
     .where((element) =>
@@ -24,4 +26,15 @@ final List<Ingredient> exampleIngredients = [
   Ingredient(title: 'Kaffeebohnen', possibleUnits: _weight),
   Ingredient(title: 'Milch', possibleUnits: _fluid),
   Ingredient(title: 'Limettenblätter', possibleUnits: _count),
+];
+
+final List<Recipe> exampleRecipes = [
+  Recipe(
+      title: 'Wraps',
+      description: 'Nur ein paar Wraps',
+      difficulty: Difficulty.hard),
+  Recipe(
+      title: 'Burritos',
+      description: 'Nur ein paar Burritos',
+      difficulty: Difficulty.easy),
 ];
