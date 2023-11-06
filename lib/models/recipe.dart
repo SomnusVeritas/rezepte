@@ -6,14 +6,31 @@ class Recipe {
   String title;
   String description;
   Difficulty? difficulty;
-  final List<IngredientListEntry> ingredients = [];
-  final List<CookingStep> steps = [];
+  List<IngredientListEntry> ingredients = [];
+  List<CookingStep> steps = [];
 
   Recipe({
     required this.title,
     this.description = '',
     this.difficulty,
   });
+
+  factory Recipe.fromJson(json) => Recipe(
+        title: json['title'] as String,
+        description: json['description'] as String,
+        // difficulty: json['difficulty'] as Difficulty?,
+      );
+  // ..ingredients = _ingredientsFromMap(
+  //     json['ingredients'] as List<Map<String, dynamic>>)
+  // ..steps = _stepsFromMap(json['steps']);
+
+  Map<String, dynamic> toJson() => {
+        'title': title,
+        'description': description,
+        // 'difficulty': difficulty,
+        // 'ingredients': ingredients.map((e) => e.toJson()).toList(),
+        // 'steps': steps.map((e) => e.toJson()).toList(),
+      };
 
   void addIngredient(IngredientListEntry ingredient) =>
       ingredients.add(ingredient);
@@ -51,4 +68,11 @@ class Recipe {
     ingredients.clear();
     steps.clear();
   }
+
+  static List<IngredientListEntry> _ingredientsFromMap(
+          List<Map<String, dynamic>> jsonList) =>
+      jsonList.map((e) => IngredientListEntry.fromJson(e)).toList();
+
+  static List<CookingStep> _stepsFromMap(List<Map<String, dynamic>> jsonList) =>
+      jsonList.map((e) => CookingStep.fromJson(e)).toList();
 }

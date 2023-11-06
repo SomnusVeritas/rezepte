@@ -9,6 +9,21 @@ class IngredientListEntry {
 
   IngredientListEntry(this.ingredient, this.amount, this.unit, this.optional);
 
+  factory IngredientListEntry.fromJson(Map<String, dynamic> json) =>
+      IngredientListEntry(
+        Ingredient.fromJson(json['ingredient']),
+        json['amount'] as int,
+        Unit.fromJson(json['unit']),
+        json['optional'] as bool,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'ingredient': ingredient.toJson(),
+        'amount': amount,
+        'unit': unit.toJson(),
+        'optional': optional,
+      };
+
   @override
   operator ==(Object other) {
     final i = other as IngredientListEntry;

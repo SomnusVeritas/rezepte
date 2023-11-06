@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:rezepte/services/providers/db/dbhelper.dart';
 
 import '../../models/recipe.dart';
 import 'package:rezepte/example_data.dart' as e;
@@ -12,7 +13,7 @@ class RecipeListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Recipe> get recipes => _recipes;
+  List<Recipe> get recipes => DbHelper.fetchRecipes();
 
   void clearRecipes({silent = false}) {
     _recipes.clear();
