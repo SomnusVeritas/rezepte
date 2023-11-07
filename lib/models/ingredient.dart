@@ -1,5 +1,10 @@
+import 'package:isar/isar.dart';
+
 import 'unit.dart';
 
+part 'ingredient.g.dart';
+
+@embedded
 class Ingredient {
   final String title;
   List<Unit> possibleUnits;

@@ -1,29 +1,36 @@
-import 'package:hive/hive.dart';
-import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:isar/isar.dart';
 import '../../../models/recipe.dart';
 import '../../../example_data.dart' as e;
 
 class DbHelper {
-  static Box<Recipe> get _recipesBox => Hive.box(name: 'recipes');
+  static late Directory _dir;
+  static Isar get _isar => Isar.open(
+        schemas: _schemas,
+        directory: _dir.path,
+      );
+
+  static const List<IsarGeneratedSchema> _schemas = [
+    RecipeSchema,
+  ];
+  static int get nextRecipeId => _isar.recipes.autoIncrement();
 
   static Future<void> init() async {
-    final dir = await getApplicationDocumentsDirectory();
-    Hive.defaultDirectory = dir.path;
-    Hive.registerAdapter('Recipe', Recipe.fromJson);
-    _recipesBox.clear();
-    for (final recipe in e.exampleRecipes) {
-      insertRecipe(recipe);
+    _dir = await getApplicationDocumentsDirectory();
+
+    if (kDebugMode) {
+      _isar.write((isar) => _isar.recipes.putAll(e.exampleRecipes));
     }
   }
 
   static List<Recipe> fetchRecipes() {
-    List<Recipe> recipes = _recipesBox.getAll(['0', '1']).cast<Recipe>();
-
-    return recipes;
-  }
-
-  static void insertRecipe(Recipe recipe) {
-    _recipesBox.put(_recipesBox.length.toString(), recipe);
+    return _isar.recipes
+        .getAll([1, 2])
+        .where((element) => element != null)
+        .cast<Recipe>()
+        .toList();
   }
 }

@@ -1,3 +1,8 @@
+import 'package:isar/isar.dart';
+
+part 'cooking_step.g.dart';
+
+@embedded
 class CookingStep {
   final String title;
   final String description;

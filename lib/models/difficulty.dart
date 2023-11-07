@@ -21,4 +21,4 @@ class DifficultyUtil {
 }
 
 // Only use camelCase or UpperCamelCase for names
-enum Difficulty { veryEasy, easy, intermediate, hard, veryHard }
+enum Difficulty { notSelected, veryEasy, easy, intermediate, hard, veryHard }

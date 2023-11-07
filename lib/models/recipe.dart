@@ -1,35 +1,46 @@
+import 'package:isar/isar.dart';
+import 'package:rezepte/models/ingredient.dart';
+import 'package:rezepte/models/unit.dart';
+
 import 'difficulty.dart';
 import 'cooking_step.dart';
 import 'ingredient_list_entry.dart';
 
+part 'recipe.g.dart';
+
+@collection
 class Recipe {
+  final int id;
   String title;
   String description;
-  Difficulty? difficulty;
+  Difficulty difficulty;
   List<IngredientListEntry> ingredients = [];
   List<CookingStep> steps = [];
 
   Recipe({
+    required this.id,
     required this.title,
     this.description = '',
-    this.difficulty,
+    this.difficulty = Difficulty.notSelected,
   });
 
   factory Recipe.fromJson(json) => Recipe(
+        id: json['id'] as int,
         title: json['title'] as String,
         description: json['description'] as String,
-        // difficulty: json['difficulty'] as Difficulty?,
-      );
-  // ..ingredients = _ingredientsFromMap(
-  //     json['ingredients'] as List<Map<String, dynamic>>)
-  // ..steps = _stepsFromMap(json['steps']);
+        difficulty: json['difficulty'] as Difficulty,
+      )
+        ..ingredients = _ingredientsFromMap(
+            json['ingredients'] as List<Map<String, dynamic>>)
+        ..steps = _stepsFromMap(json['steps']);
 
   Map<String, dynamic> toJson() => {
+        'id': id,
         'title': title,
         'description': description,
-        // 'difficulty': difficulty,
-        // 'ingredients': ingredients.map((e) => e.toJson()).toList(),
-        // 'steps': steps.map((e) => e.toJson()).toList(),
+        'difficulty': difficulty,
+        'ingredients': ingredients.map((e) => e.toJson()).toList(),
+        'steps': steps.map((e) => e.toJson()).toList(),
       };
 
   void addIngredient(IngredientListEntry ingredient) =>
@@ -52,7 +63,7 @@ class Recipe {
   bool get isEmpty {
     return title.isEmpty &&
         description.isEmpty &&
-        difficulty == null &&
+        difficulty == Difficulty.notSelected &&
         ingredients.isEmpty &&
         steps.isEmpty;
   }
@@ -64,7 +75,7 @@ class Recipe {
   void clear() {
     title = '';
     description = '';
-    difficulty = null;
+    difficulty = Difficulty.notSelected;
     ingredients.clear();
     steps.clear();
   }

@@ -1,5 +1,6 @@
 import 'package:rezepte/models/difficulty.dart';
 import 'package:rezepte/models/unit.dart';
+import 'package:rezepte/services/providers/db/dbhelper.dart';
 
 import 'models/ingredient.dart';
 import 'constants.dart' as constants;
@@ -30,10 +31,12 @@ final List<Ingredient> exampleIngredients = [
 
 final List<Recipe> exampleRecipes = [
   Recipe(
+      id: DbHelper.nextRecipeId,
       title: 'Wraps',
       description: 'Nur ein paar Wraps',
       difficulty: Difficulty.hard),
   Recipe(
+      id: DbHelper.nextRecipeId,
       title: 'Burritos',
       description: 'Nur ein paar Burritos',
       difficulty: Difficulty.easy),

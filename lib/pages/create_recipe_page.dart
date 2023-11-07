@@ -76,9 +76,10 @@ class _CreateRecipeState extends State<CreateRecipe> {
                   style: TextStyle(
                       color: Theme.of(context).colorScheme.onBackground),
                 ),
-                DropdownMenu<Difficulty?>(
+                DropdownMenu<Difficulty>(
                   dropdownMenuEntries: DifficultyUtil.getDropdownList(),
-                  onSelected: (value) => recipe.difficulty = value,
+                  onSelected: (value) =>
+                      recipe.difficulty = value ?? Difficulty.notSelected,
                   label: const Text('Difficulty'),
                   textStyle: TextStyle(
                       color: Theme.of(context).colorScheme.onBackground),

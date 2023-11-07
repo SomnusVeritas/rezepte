@@ -1,6 +1,11 @@
+import 'package:isar/isar.dart';
+
 import 'ingredient.dart';
 import 'unit.dart';
 
+part 'ingredient_list_entry.g.dart';
+
+@embedded
 class IngredientListEntry {
   final Ingredient ingredient;
   final int amount;

@@ -10,6 +10,7 @@
 .buildlog/
 .history
 .svn/
+/lib/models/*.g.dart
 
 # IntelliJ related
 *.iml

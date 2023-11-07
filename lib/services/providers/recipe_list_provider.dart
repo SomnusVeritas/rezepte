@@ -13,7 +13,7 @@ class RecipeListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Recipe> get recipes => DbHelper.fetchRecipes();
+  List<Recipe> get recipes => DbHelper.fetchRecipes(); // _recipes;
 
   void clearRecipes({silent = false}) {
     _recipes.clear();

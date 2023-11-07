@@ -1,3 +1,8 @@
+import 'package:isar/isar.dart';
+
+part 'unit.g.dart';
+
+@embedded
 class Unit {
   final String name;
   final UnitType type;
