@@ -3,11 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:rezepte/services/providers/db/dbhelper.dart';
 import 'package:rezepte/widgets/ingredients_bottomsheet.dart';
 import 'package:rezepte/widgets/will_pop_scope.dart';
-import '../models/difficulty.dart';
-import '../models/ingredient_list_entry.dart';
-import '../models/recipe.dart';
-import '../services/providers/recipe_list_provider.dart';
-import '../services/providers/recipe_provider.dart';
+import '../../models/difficulty.dart';
+import '../../models/ingredient_list_entry.dart';
+import '../../models/recipe.dart';
+import '../../services/providers/recipe_list_provider.dart';
+import '../../services/providers/recipe_provider.dart';
 
 class CreateRecipe extends StatefulWidget {
   const CreateRecipe({super.key});

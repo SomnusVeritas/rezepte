@@ -22,11 +22,23 @@ final List<Unit> _fluid =
     constants.units.where((element) => element.type == UnitType.fluid).toList();
 
 final List<Ingredient> exampleIngredients = [
-  Ingredient(title: 'Karotte', possibleUnits: _weightAndCount),
-  Ingredient(title: 'Kartoffel', possibleUnits: _weightAndCount),
-  Ingredient(title: 'Kaffeebohnen', possibleUnits: _weight),
-  Ingredient(title: 'Milch', possibleUnits: _fluid),
-  Ingredient(title: 'Limettenblätter', possibleUnits: _count),
+  Ingredient(
+      title: 'Karotte',
+      possibleUnits: _weightAndCount,
+      type: IngredientType.vegetable),
+  Ingredient(
+      title: 'Kartoffel',
+      possibleUnits: _weightAndCount,
+      type: IngredientType.vegetable),
+  Ingredient(
+      title: 'Kaffeebohnen',
+      possibleUnits: _weight,
+      type: IngredientType.other),
+  Ingredient(title: 'Milch', possibleUnits: _fluid, type: IngredientType.dairy),
+  Ingredient(
+      title: 'Limettenblätter',
+      possibleUnits: _count,
+      type: IngredientType.other),
 ];
 
 final List<Recipe> exampleRecipes = [

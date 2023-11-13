@@ -169,7 +169,8 @@ class _IngredientsBottomsheetState extends State<IngredientsBottomsheet> {
   }
 
   bool _submit() {
-    final ingredient = Ingredient(title: _ingredientController.text);
+    final ingredient = Ingredient(
+        title: _ingredientController.text, type: IngredientType.other);
     final unit = selectedUnit;
     final amount = int.tryParse(_amountController.text);
     if (ingredient.title.isEmpty || unit == null || amount == null) {
