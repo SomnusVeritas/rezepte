@@ -5,9 +5,9 @@ import '../../models/recipe.dart';
 class RecipeProvider extends ChangeNotifier {
   Recipe? _recipe;
 
-  Recipe get recipe => _recipe ??= Recipe(id: 0, title: '');
+  Recipe? get recipe => _recipe;
 
-  set recipe(Recipe recipe) {
+  set recipe(Recipe? recipe) {
     _recipe = recipe;
     notifyListeners();
   }

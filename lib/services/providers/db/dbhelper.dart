@@ -30,4 +30,6 @@ class DbHelper {
   static bool deleteRecipe(Recipe recipe) {
     return _isar.write((isar) => isar.recipes.delete(recipe.id));
   }
+
+  static Stream<void> get recipesChangedStream => _isar.recipes.watchLazy();
 }

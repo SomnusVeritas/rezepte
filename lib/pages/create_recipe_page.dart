@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rezepte/services/providers/db/dbhelper.dart';
 import 'package:rezepte/widgets/ingredients_bottomsheet.dart';
 import 'package:rezepte/widgets/will_pop_scope.dart';
 import '../models/difficulty.dart';
@@ -34,10 +35,17 @@ class _CreateRecipeState extends State<CreateRecipe> {
 
   @override
   Widget build(BuildContext context) {
-    recipe = Provider.of<RecipeProvider>(context).recipe;
-    recipeProvider = Provider.of<RecipeProvider>(context, listen: false);
+    recipeProvider = Provider.of<RecipeProvider>(context, listen: true);
     recipeListProvider =
         Provider.of<RecipeListProvider>(context, listen: false);
+
+    if (recipeProvider.recipe == null) {
+      recipe = Recipe(id: DbHelper.nextRecipeId, title: '');
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        recipeProvider.recipe = recipe;
+      });
+    }
+
     return CustomWillPopScope(
       context,
       ignore: recipe.isEmpty,

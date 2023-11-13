@@ -4,6 +4,11 @@ import 'package:rezepte/services/providers/db/dbhelper.dart';
 import '../../models/recipe.dart';
 
 class RecipeListProvider extends ChangeNotifier {
+  RecipeListProvider() {
+    DbHelper.recipesChangedStream.listen((event) {
+      notifyListeners();
+    });
+  }
   // final List<Recipe> _recipes = [];
 
   // set recipes(List<Recipe> recipes) {
@@ -20,8 +25,7 @@ class RecipeListProvider extends ChangeNotifier {
   //   if (!silent) notifyListeners();
   // }
 
-  void addRecipe(Recipe recipe, {silent = false}) {
+  void addRecipe(Recipe recipe) {
     DbHelper.putRecipe(recipe);
-    if (!silent) notifyListeners();
   }
 }
