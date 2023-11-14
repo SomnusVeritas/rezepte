@@ -1,27 +1,31 @@
 import 'package:flutter/foundation.dart';
+import 'package:rezepte/services/providers/db/dbhelper.dart';
 
 import '../../models/recipe.dart';
-import 'package:rezepte/example_data.dart' as e;
 
 class RecipeListProvider extends ChangeNotifier {
-  final List<Recipe> _recipes = kDebugMode ? e.exampleRecipes : [];
-
-  set recipes(List<Recipe> recipes) {
-    _recipes.clear();
-    _recipes.addAll(recipes);
-    notifyListeners();
+  RecipeListProvider() {
+    DbHelper.recipesChangedStream.listen((event) {
+      notifyListeners();
+    });
   }
+  // final List<Recipe> _recipes = [];
 
-  List<Recipe> get recipes => _recipes;
+  // set recipes(List<Recipe> recipes) {
+  //   _recipes.clear();
+  //   _recipes.addAll(recipes);
+  //   notifyListeners();
+  // }
 
-  void clearRecipes({silent = false}) {
-    _recipes.clear();
+  List<Recipe> get recipes => DbHelper.fetchRecipes(); // _recipes;
 
-    if (!silent) notifyListeners();
-  }
+  // void clearRecipes({silent = false}) {
+  //   _recipes.clear();
 
-  void addRecipe(Recipe recipe, {silent = false}) {
-    _recipes.add(recipe);
-    if (!silent) notifyListeners();
+  //   if (!silent) notifyListeners();
+  // }
+
+  void addRecipe(Recipe recipe) {
+    DbHelper.putRecipe(recipe);
   }
 }

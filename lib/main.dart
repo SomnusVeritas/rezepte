@@ -6,9 +6,12 @@ import 'package:rezepte/services/providers/recipe_list_provider.dart';
 import 'package:rezepte/services/providers/recipe_provider.dart';
 
 import 'pages/recipe_detail_page.dart';
+import 'services/providers/db/dbhelper.dart';
 import 'theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await DbHelper.init();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(
       create: (_) => RecipeListProvider(),

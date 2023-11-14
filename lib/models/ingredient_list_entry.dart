@@ -1,6 +1,11 @@
+import 'package:isar/isar.dart';
+
 import 'ingredient.dart';
 import 'unit.dart';
 
+part 'ingredient_list_entry.g.dart';
+
+@embedded
 class IngredientListEntry {
   final Ingredient ingredient;
   final int amount;
@@ -8,6 +13,21 @@ class IngredientListEntry {
   final bool optional;
 
   IngredientListEntry(this.ingredient, this.amount, this.unit, this.optional);
+
+  factory IngredientListEntry.fromJson(Map<String, dynamic> json) =>
+      IngredientListEntry(
+        Ingredient.fromJson(json['ingredient']),
+        json['amount'] as int,
+        Unit.fromJson(json['unit']),
+        json['optional'] as bool,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'ingredient': ingredient.toJson(),
+        'amount': amount,
+        'unit': unit.toJson(),
+        'optional': optional,
+      };
 
   @override
   operator ==(Object other) {
