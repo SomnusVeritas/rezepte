@@ -13,13 +13,13 @@ class AddRecipeInfoWidget extends StatefulWidget {
 }
 
 class _AddRecipeInfoWidgetState extends State<AddRecipeInfoWidget> {
-  late Recipe? recipe;
+  late RecipeProvider recipeProvider;
 
   @override
   Widget build(BuildContext context) {
-    recipe = Provider.of<RecipeProvider>(context, listen: true).recipe;
+    recipeProvider = Provider.of<RecipeProvider>(context, listen: true);
 
-    if (recipe == null) {
+    if (recipeProvider.recipe == null) {
       return const Center(
         child: CircularProgressIndicator(),
       );
@@ -28,34 +28,37 @@ class _AddRecipeInfoWidgetState extends State<AddRecipeInfoWidget> {
     return Column(
       children: [
         TextFormField(
+          initialValue: recipeProvider.recipe!.title,
           onTapOutside: (event) => FocusScope.of(context).unfocus(),
-          onChanged: (value) => recipe!.title = value,
+          onChanged: (value) => recipeProvider.recipe!.title = value,
           decoration: const InputDecoration(
             label: Text('Title'),
           ),
           style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
         ),
         TextFormField(
+          initialValue: recipeProvider.recipe!.description,
           onTapOutside: (event) => FocusScope.of(context).unfocus(),
           minLines: 1,
           maxLines: 4,
-          onChanged: (value) => recipe!.description = value,
+          onChanged: (value) => recipeProvider.recipe!.description = value,
           decoration: const InputDecoration(
             label: Text('Description'),
           ),
           style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
         ),
         DropdownMenu<Difficulty>(
+          initialSelection: recipeProvider.recipe!.difficulty,
           dropdownMenuEntries: DifficultyUtil.getDropdownList(),
-          onSelected: (value) =>
-              recipe!.difficulty = value ?? Difficulty.notSelected,
+          onSelected: (value) => recipeProvider.recipe!.difficulty =
+              value ?? Difficulty.notSelected,
           label: const Text('Difficulty'),
           textStyle:
               TextStyle(color: Theme.of(context).colorScheme.onBackground),
         ),
         // ElevatedButton(
         //   onPressed: _openIngredientBottomSheet,
-        //   child: const Text('Add Ingredient'),
+        //   child: const Text('Add Ingred  ient'),
         // ),
         // Expanded(
         //   child: ListView.separated(
